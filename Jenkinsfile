@@ -23,7 +23,7 @@ pipeline {
                 }
             }
         }
-        stage('sonnar-Qube Analysis')
+        stage('sonnar-Qube Analysis'){
         steps{
             scripts{
                 sh'''
