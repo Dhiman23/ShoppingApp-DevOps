@@ -37,6 +37,36 @@ pipeline {
             
         }
     }
+
+      stage('Owasp Scan'){
+            steps{
+               
+                  dependecyCheck additionalAgruments: ' --scan ./', odcInstallation: 'DP'
+                  dependecyCheckPublisher pattern: '**/depencdency-check-report.xml'
+               
+            }
+        }
+        
+      stage('Build application'){
+            steps{
+               
+                  sh 'mvn clean install'
+               
+            }
+        }
+         stage('Build & push docker image'){
+            steps{
+               
+                  script{
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                     sh 'docker build -t shopping:latest -f docker/Dockerfile .'
+                     sh 'docker tag shopping:lastest sajaldhimanitc1999/shopping:latest'
+                     sh ' docker push sajaldhimanitc1999/shopping:latest'
+                     }
+                  }
+               
+            }
+        }
  }
 
 }
