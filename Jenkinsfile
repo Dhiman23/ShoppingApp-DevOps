@@ -16,7 +16,7 @@ pipeline {
                }
             }
         }
-    }
+    
         stage('compile'){
             steps{
                 scripts{
